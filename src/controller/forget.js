@@ -34,7 +34,7 @@ const forgetPassword = async (req, res) => {
                 }
             });
             const html = `<h1>OTP</h1><p>click and reset your password:
-            http://localhost:5173/resetpassword/${user._id}/${token}    
+            https://mailverifacationapp.netlify.app/resetpassword/${user._id}/${token}    
                     </p>`;
 
             const dummy= {
