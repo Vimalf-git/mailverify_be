@@ -48,7 +48,7 @@ const forgetPassword = async (req, res) => {
             // console.log(process.env.email);
             // console.log(process.env.pass);
 
-            res.send({ message: 'token generated', link: `http://localhost:8000/forgetpass/${user._id}/${token}` })
+            res.send({ message: 'token generated', link: `https://mailverifacationapp.netlify.app/resetpassword/${user._id}/${token}    ` })
         } else {
             res.status(400).send({ message: 'Invalid email' })
         }
