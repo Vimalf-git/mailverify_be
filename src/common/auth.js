@@ -6,11 +6,14 @@ const hashPassword=async(password)=>{
     return hash 
 }
 const creatToken=async(payload)=>{
-    const token=Jwt.sign(payload,"dfghjghkjghfgdfds",{
+    const token=Jwt.sign(payload,"arkeke&^%$hvdgs",{
        expiresIn:'1m'
     });
     return token;
 }
-export default {hashPassword,
+const hashCompare=async (password,hash)=>{
+return await bcrypt.compare(password,hash);
+}
+export default {hashPassword,hashCompare,
     creatToken
 }
