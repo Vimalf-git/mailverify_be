@@ -54,7 +54,7 @@ const getForgetres = async (req, res) => {
                 mail:data.email
             })
 
-            data.otp="";
+            data.token="";
             userModel.create(data);
         } else {
             res.status(400).send({
