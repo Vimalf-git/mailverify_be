@@ -1,6 +1,6 @@
 import express from 'express'
-import verify from '../controller/userCreate.js'
+import userCreate from '../controller/userCreate.js'
 const router =express.Router();
-router.post('/',verify.mailVerify)
+router.post('/',userCreate.mailVerify)
 export default router;
 
