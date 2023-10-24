@@ -2,7 +2,6 @@ import userModel from "../model/user.js"
 const getAllData=async(req,res)=>{
    const data=await userModel.find({},{password:0,token:0,_id:0});
    try {
-    console.log(data);
     if(data){
         res.status(200).send(({message:'data fetched successfully',data}))
     }else{

@@ -16,12 +16,8 @@ const forgetPassword = async (req, res) => {
                     email: user.email
                 }
             )
-            // await userModel.findOne({$set:{otp:token}})
-
             user.token = token;
             userModel.create(user);
-            // console.log(`http://localhost:8000/forgetpass/${user._id}/${token}`);
-
             const transporter = mail.createTransport({
                 service: 'gmail',
                 port: 465,
@@ -49,12 +45,9 @@ const forgetPassword = async (req, res) => {
     }
 }
 const getForgetres = async (req, res) => {
-    // console.log('vimal');
-    console.log(req.params.id);
     try {
         const data = await userModel.findOne({ token:req.params.token})
         if (data) {
-            console.log('ji');
             res.status(200).send({
                 message: 'OTP successfully matched',
                 OTP: true,
@@ -74,20 +67,12 @@ const getForgetres = async (req, res) => {
     }
 }
 
-
-
-
 const updatePassword = async (req, res) => {
     try {
         const data = await userModel.findOne({ email: req.body.email });
-        console.log(req.body.email);
-        console.log("enter into log");
-        console.log(data);
+        
         if(data){
-            console.log('enter into change');
-            console.log();
             data.password = await auth.hashPassword(req.body.password)
-            // console.log(data);
             userModel.create(data)
             res.status(200).send({ message: 'password updated' })
         }else{

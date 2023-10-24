@@ -1,7 +1,6 @@
 import userModel from "../model/user.js"
 import auth from "../common/auth.js"
 const login=async(req,res)=>{
-    // console.log("login");
     try {
         const user= await userModel.findOne({email:req.body.mail})
         if(user){
