@@ -8,9 +8,7 @@ import mail from 'nodemailer'
 const forgetPassword = async (req, res) => {
 
     try {
-        // console.log("hii" + req.body.email);
         const user = await userModel.findOne({ email: req.body.email });
-        // console.log(user);
         if (user) {
             const token = await auth.creatToken(
                 {
@@ -27,13 +25,12 @@ const forgetPassword = async (req, res) => {
             const transporter = mail.createTransport({
                 service: 'gmail',
                 port: 465,
-                // secure:true,
                 auth: {
                     user: process.env.email,
                     pass: process.env.pass
                 }
             });
-            let link = `http://localhost:5173/resetpassword?emailtoken=${token}&id=${user._id}`;
+            let link = `${process.env.SECRET_LINK}emailtoken=${token}&id=${user._id}`;
             const html = `<h1>OTP</h1>
             <a href=${link}>click and reset your password:</a>`;
             const dummy = {
@@ -43,10 +40,6 @@ const forgetPassword = async (req, res) => {
                 html: html
             }
             transporter.sendMail(dummy)
-            // console.log(dummy);
-            // console.log(process.env.email);
-            // console.log(process.env.pass);
-
             res.send({ message: 'token generated', link: link })
         } else {
             res.status(400).send({ message: 'Invalid email' })
@@ -60,10 +53,6 @@ const getForgetres = async (req, res) => {
     console.log(req.params.id);
     try {
         const data = await userModel.findOne({ token:req.params.token})
-        // console.log(data.otp);
-        // console.log(req.params.token);
-        // console.log(req.params.id);
-        // console.log(data.token);
         if (data) {
             console.log('ji');
             res.status(200).send({

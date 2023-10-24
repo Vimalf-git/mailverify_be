@@ -9,8 +9,8 @@ const hashCompare=async (password,hash)=>{
     return await bcrypt.compare(password,hash);
     }
 const creatToken=async(payload)=>{
-    const token=Jwt.sign(payload,"arkeke&^%$hvdgs",{
-       expiresIn:'1m'
+    const token=Jwt.sign(payload,process.env.SECRET_STRING,{
+       expiresIn:process.env.expire_time
     });
     return token;
 }
