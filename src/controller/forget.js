@@ -61,7 +61,7 @@ const getForgetres = async (req, res) => {
     try {
         const data = await userModel.findOne({ token:req.params.token})
         // console.log(data.otp);
-        console.log(req.params.token);
+        // console.log(req.params.token);
         // console.log(req.params.id);
         // console.log(data.token);
         if (data) {
