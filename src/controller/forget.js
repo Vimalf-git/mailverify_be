@@ -36,7 +36,7 @@ const forgetPassword = async (req, res) => {
                 html: html
             }
             transporter.sendMail(dummy)
-            res.send({ message: 'token generated', link: link })
+            res.status(200).send({ message: 'token generated', link: link })
         } else {
             res.status(400).send({ message: 'Invalid email' })
         }
