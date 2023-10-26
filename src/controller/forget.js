@@ -36,7 +36,7 @@ const forgetPassword = async (req, res) => {
                 html: html
             }
             transporter.sendMail(dummy)
-            res.status(200).send({ message: 'token generated', link: link })
+            res.status(200).send({ message: 'token generated', token: token })
         } else {
             res.status(400).send({ message: 'Invalid email' })
         }
@@ -45,26 +45,25 @@ const forgetPassword = async (req, res) => {
     }
 }
 const getForgetres = async (req, res) => {
+
     try {
         const data = await userModel.findOne({ token:req.params.token})
         if (data) {
             res.status(200).send({
-                message: 'OTP successfully matched',
+                message: 'successfully validated',
                 OTP: true,
                 mail:data.email
             })
-
-            data.token="";
-            userModel.create(data);
+      
         } else {
-            res.status(400).send({
-                message: 'OTP is not correct', OTP: false
+            res.status(401).send({
+                message: 'Invalid mail verify', OTP: false
             })
+          
         }
     } catch (error) {
         res.status(500).send({ message: 'Internal server error', error: error.message })
-
-    }
+       }
 }
 
 const updatePassword = async (req, res) => {
@@ -73,7 +72,8 @@ const updatePassword = async (req, res) => {
         
         if(data){
             data.password = await auth.hashPassword(req.body.password)
-            userModel.create(data)
+                    data.token="";
+          await  data.save()
             res.status(200).send({ message: 'password updated' })
         }else{
             res.status(400).send({ message: 'user is not exist' })

@@ -9,7 +9,7 @@ const hashCompare=async (password,hash)=>{
     return await bcrypt.compare(password,hash);
     }
 const creatToken=async(payload)=>{
-    const token=Jwt.sign(payload,process.env.SECRET_STRING,{
+    const token= await Jwt.sign(payload,process.env.SECRET_STRING,{
        expiresIn:process.env.expire_time
     });
     return token;
@@ -30,6 +30,12 @@ const validate=async(req,res,next)=>{
         res.status(400).send({message:'No token found'})
     }
 }
+
+
+
+let String="1dd9fc6e6c0225684e299eba4a9ae73244379453916718e6c9c13521902abec39ded45e879b0fdfaac1c89df6173e23ab8c03454125e288e5c81cbbab7723b7d"
+let findData=await hashCompare("@Vimal97",String);
+console.log(findData);
 export default {hashPassword,hashCompare,
     creatToken,validate
 }
